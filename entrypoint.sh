@@ -2,11 +2,6 @@
 
 echo "Syncing /home/tcotts/Documents/notes to s3://${AWS_BUCKET}"
 
-echo ${AWS_DIR}
-echo ${AWS_S3_BUCKET}
-echo ${AWS_ACCESS_KEY_ID}
-echo ${AWS_SECRET_ACCESS_KEY}
-
 if [ -z "$AWS_S3_BUCKET" ]; then
   echo "AWS_S3_BUCKET is not set. Quitting."
   exit 1
@@ -33,9 +28,10 @@ aws configure set region "${AWS_REGION}" --profile s3-sync-action
 aws configure list --profile s3-sync-action
 
 
-aws s3 sync /home/tcotts/Documents/notes s3://${AWS_BUCKET}/${AWS_DIR} \
+aws s3 sync . s3://${AWS_BUCKET}/${AWS_DIR} \
     --profile s3-sync-action \
     --exclude ".git/*" \
+    --exclude ".github/*" \
     --delete
 
 aws configure set aws_access_key_id null --profile s3-sync-action

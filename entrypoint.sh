@@ -2,6 +2,11 @@
 
 echo "Syncing /home/tcotts/Documents/notes to s3://${AWS_BUCKET}"
 
+echo ${AWS_DIR}
+echo ${AWS_S3_BUCKET}
+echo ${AWS_ACCESS_KEY_ID}
+echo ${AWS_SECRET_ACCESS_KEY}
+
 if [ -z "$AWS_S3_BUCKET" ]; then
   echo "AWS_S3_BUCKET is not set. Quitting."
   exit 1

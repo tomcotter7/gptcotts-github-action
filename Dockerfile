@@ -5,10 +5,12 @@ FROM alpine:latest
 RUN	apk add --no-cache \
   bash \
   ca-certificates \
-  curl \
+  curl
 
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
 RUN unzip awscliv2.zip
+
 RUN ./aws/install
  
 # Copies your code file  repository to the filesystem

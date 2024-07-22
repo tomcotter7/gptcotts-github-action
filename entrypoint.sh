@@ -27,7 +27,6 @@ aws configure set region "${AWS_REGION}" --profile s3-sync-action
 
 aws configure list --profile s3-sync-action
 
-
 aws s3 sync . s3://${AWS_BUCKET}/${AWS_DIR} \
     --profile s3-sync-action \
     --exclude ".git/*" \

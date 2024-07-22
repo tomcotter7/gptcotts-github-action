@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo "Syncing /home/tcotts/Documents/notes to s3://${AWS_BUCKET}"
 
 if [ -z "$AWS_S3_BUCKET" ]; then
   echo "AWS_S3_BUCKET is not set. Quitting."
@@ -27,7 +26,11 @@ aws configure set region "${AWS_REGION}" --profile s3-sync-action
 
 aws configure list --profile s3-sync-action
 
-aws s3 sync . s3://${AWS_BUCKET}/${AWS_DIR} \
+s3_url="s3://${AWS_BUCKET}/${AWS_DIR}"
+
+echo "Syncing to ${s3_url}"
+
+aws s3 sync . ${s3_url} \
     --profile s3-sync-action \
     --exclude ".git/*" \
     --exclude ".github/*" \

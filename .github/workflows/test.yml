@@ -1,12 +1,18 @@
 on: [push]
- 
+
 jobs:
   custom_test:
     runs-on: ubuntu-latest
     name: We test it locally with act
     steps:
-      - name: get-pokemon-name 
-        uses: ./ # Uses an action in the root directory
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch_depth: 0
+          fetch_tags: true
+      - name: Get Pokemon name
+        uses: ./
+          # uses: philschmid/blog-custom-github-action@master
         id: pokemon
         with:
           pokemon_id: 150

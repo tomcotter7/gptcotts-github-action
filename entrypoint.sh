@@ -30,7 +30,7 @@ s3_url="s3://${AWS_S3_BUCKET}/${AWS_DIR}"
 
 echo "Syncing to ${s3_url}"
 
-aws s3 sync /home/tcotts/Documents/notes/ ${s3_url} \
+aws s3 sync . ${s3_url} \
     --profile s3-sync-action \
     --exclude ".git/*" \
     --exclude ".github/*" \

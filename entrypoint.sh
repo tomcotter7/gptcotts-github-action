@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 if [ -z "$AWS_S3_BUCKET" ]; then
   echo "AWS_S3_BUCKET is not set. Quitting."
   exit 1
@@ -40,5 +39,36 @@ aws configure set aws_access_key_id null --profile s3-sync-action
 aws configure set aws_secret_access_key null --profile s3-sync-action
 aws configure set region null --profile s3-sync-action
 
-echo "Sync complete"
+echo "Sync to s3 complete"
+
+echo "Syncing to pinecone"
+
+if [ -z "$PINECONE_API_KEY" ]; then
+  echo "PINECONE_API_KEY is not set. Quitting."
+  exit 1
+fi
+
+if [ -z "$PINECONE_INDEX" ]; then
+  echo "PINECONE_INDEX is not set. Quitting."
+  exit 1
+fi
+
+if [ -z "$PINECONE_NAMESPACE" ]; then
+  echo "PINECONE_NAMESPACE is not set. Quitting."
+  exit 1
+fi
+
+if [ -z "$COHERE_API_KEY" ]; then
+  echo "COHERE_API_KEY is not set. Quitting."
+  exit 1
+fi
+
+changed_files=$(git show --name-only --oneline HEAD | tail -n +2)
+
+python3 ./pinecone_sync.py \
+  --api_key $PINECONE_API_KEY \
+  --cohere_api_key $COHERE_API_KEY \
+  --index $PINECONE_INDEX \
+  --namespace $PINECONE_NAMESPACE \
+  --changed_files $changed_files
 

@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     curl \
     unzip \
+    python3 \
+    python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install AWS CLI
@@ -14,6 +16,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && unzip awscliv2.zip \
     && ./aws/install \
     && rm -rf aws awscliv2.zip
+
+RUN pip3 install pinecone-client cohere
 
 # Copy your code file to the filesystem
 COPY entrypoint.sh /entrypoint.sh

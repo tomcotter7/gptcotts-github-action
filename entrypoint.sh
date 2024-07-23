@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 if [ -z "$AWS_S3_BUCKET" ]; then
   echo "AWS_S3_BUCKET is not set. Quitting."
   exit 1
@@ -29,7 +30,7 @@ s3_url="s3://${AWS_S3_BUCKET}/${AWS_DIR}"
 
 echo "Syncing to ${s3_url}"
 
-aws s3 sync . ${s3_url} \
+aws s3 sync /home/tcotts/Documents/notes/ ${s3_url} \
     --profile s3-sync-action \
     --exclude ".git/*" \
     --exclude ".github/*" \
@@ -42,6 +43,11 @@ aws configure set region null --profile s3-sync-action
 echo "Sync to s3 complete"
 
 echo "Syncing to pinecone"
+
+PINECONE_API_KEY="6278a3cd-b5b9-4f7c-9aa9-018d9077f3f1"
+PINECONE_INDEX="notes"
+PINECONE_NAMESPACE="tcotts-notes"
+COHERE_API_KEY="E6Co5OUVwzw0l0UfHYZoZ2JBUvbPkc1qseEdN0Rr"
 
 if [ -z "$PINECONE_API_KEY" ]; then
   echo "PINECONE_API_KEY is not set. Quitting."
@@ -63,7 +69,8 @@ if [ -z "$COHERE_API_KEY" ]; then
   exit 1
 fi
 
-changed_files=$(git show --name-only --oneline HEAD | tail -n +2)
+readarray -t changed_files < <(git show --name-only --oneline HEAD | tail -n +2)
+
 
 python3 ./pinecone_sync.py \
   --api_key $PINECONE_API_KEY \

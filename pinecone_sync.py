@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
-import os
 from pinecone import Pinecone
 import cohere
+import uuid
 
 def connect_to_pinecone(api_key: str) -> Pinecone:
     pinecone = Pinecone(api_key)
@@ -39,6 +39,10 @@ def convert_to_chunks(text: str, notes_class: str) -> list[dict]:
         else:
             current_section += line + "\n"
 
+    if len(current_section) > 0:
+        chunk = ": ".join([val for val in headers.values() if len(val) > 0]) + ":" + current_section
+        contextualized_lines.append({"header": headers[1], "class": notes_class, "text": chunk})
+
     return contextualized_lines
 
 def batch_embed(chunks: list[dict], cohere_api_key: str) -> list[dict]:
@@ -49,13 +53,13 @@ def batch_embed(chunks: list[dict], cohere_api_key: str) -> list[dict]:
         batch = chunks[i:i + batch_size]
         texts = [chunk["text"] for chunk in batch]
         embeddings = cohere_client.embed(
-                texts,
+                texts=texts,
                 model="embed-english-v3.0",
                 input_type="search_document"
         )
         for idx, emb in enumerate(embeddings.embeddings): # type: ignore
             results.append({
-                "id": str(i + idx),
+                "id": str(uuid.uuid4()),
                 "metadata": {"header": batch[i + idx]["header"], "class": batch[i + idx]["class"], "text": batch[i + idx]["text"]},
                 "values": emb
             })
@@ -78,12 +82,14 @@ def main(
     changed_files: str
 ):
 
+
     pc = connect_to_pinecone(api_key)
     pc_index = pc.Index(index)
     if pc_index is None:
         raise ValueError(f"Index {index} not found")
 
-    files = [os.path.basename(f) for f in changed_files.split("\n")]
+    files = [f.split(".")[0] for f in changed_files.split("\n")]
+
     dim = 1024
     for file in files:
 

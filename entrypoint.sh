@@ -69,7 +69,8 @@ if [ -z "$COHERE_API_KEY" ]; then
   exit 1
 fi
 
-readarray -t changed_files < <(git show --name-only --oneline HEAD | tail -n +2)
+git config --global --add safe.directory /github/workspace
+files=$(git show --name-only --oneline HEAD | tail -n +2| paste -sd '\\n' -)
 
 
 python3 /pinecone_sync.py \
@@ -77,5 +78,5 @@ python3 /pinecone_sync.py \
   --cohere_api_key $COHERE_API_KEY \
   --index $PINECONE_INDEX \
   --namespace $PINECONE_NAMESPACE \
-  --changed_files $changed_files
+  --changed_files $files
 

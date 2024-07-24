@@ -72,6 +72,7 @@ def upsert(pc: Pinecone, index: str, namespace: str, data: list[dict]):
             namespace=namespace,
             vectors=data
     )
+    print(f"Upserted {len(data)} items")
 
 
 def main(
@@ -94,6 +95,8 @@ def main(
     dim = 1024
     for file in files:
 
+        print(f"Processing file: {file}")
+
         old_data = pc_index.query(
                 namespace=namespace,
                 vector = [0.0 for _ in range(dim)],
@@ -110,6 +113,8 @@ def main(
         with open(file + ".md", "r") as f:
             text = f.read()
         chunks = convert_to_chunks(text, file)
+        for chunk in chunks:
+            print(chunk["text"])
         data = batch_embed(chunks, cohere_api_key)
         upsert(pc, index, namespace, data)
 

@@ -83,7 +83,7 @@ def main(
     changed_files: str
 ):
 
-    
+    print(changed_files)
     pc = connect_to_pinecone(api_key)
     pc_index = pc.Index(index)
     if pc_index is None:

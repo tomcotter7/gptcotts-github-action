@@ -71,6 +71,7 @@ fi
 
 git config --global --add safe.directory /github/workspace
 files=$(git show --name-only --oneline HEAD | tail -n +2| paste -sd '\\n' -)
+echo $files
 
 
 python3 /pinecone_sync.py \

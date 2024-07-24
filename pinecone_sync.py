@@ -66,7 +66,10 @@ def batch_embed(chunks: list[dict], cohere_api_key: str) -> list[dict]:
     return results
 
 def upsert(pc: Pinecone, index: str, namespace: str, data: list[dict]):
-    
+    if len(data) == 0:
+        print("No data to upsert")
+        return
+
     pc_index = pc.Index(index)
     pc_index.upsert( # type: ignore
             namespace=namespace,

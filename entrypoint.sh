@@ -71,12 +71,12 @@ fi
 
 git config --global --add safe.directory /github/workspace
 files=$(git diff-tree --no-commit-id --name-only -r HEAD | paste -sd '|' -)
+echo $files
 
-
-python3 /pinecone_sync.py \
-  --api_key $PINECONE_API_KEY \
-  --cohere_api_key $COHERE_API_KEY \
-  --index $PINECONE_INDEX \
-  --namespace $PINECONE_NAMESPACE \
-  --changed_files $files
+# python3 /pinecone_sync.py \
+#   --api_key $PINECONE_API_KEY \
+#   --cohere_api_key $COHERE_API_KEY \
+#   --index $PINECONE_INDEX \
+#   --namespace $PINECONE_NAMESPACE \
+#   --changed_files $files
 

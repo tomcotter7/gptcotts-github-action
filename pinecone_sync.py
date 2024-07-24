@@ -33,7 +33,7 @@ def convert_to_chunks(text: str, notes_class: str) -> list[dict]:
                     except KeyError:
                         break
 
-        elif line.startswith("-") or len(line) == 0:
+        elif len(line) == 0:
             pass
 
         else:

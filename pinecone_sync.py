@@ -116,8 +116,6 @@ def main(
         with open(file + ".md", "r") as f:
             text = f.read()
         chunks = convert_to_chunks(text, file)
-        for chunk in chunks:
-            print(chunk["text"])
         data = batch_embed(chunks, cohere_api_key)
         upsert(pc, index, namespace, data)
 

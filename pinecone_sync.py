@@ -88,8 +88,8 @@ def main(
     if pc_index is None:
         raise ValueError(f"Index {index} not found")
 
-    files = [f.split(".")[0] for f in changed_files.split("\n") if f.endswith(".md")]
-    print(f"Processing {files}")
+    files = [f.split(".")[0] for f in changed_files.split("\n")]
+    files = [f for f in files if len(f) > 0]
 
     dim = 1024
     for file in files:

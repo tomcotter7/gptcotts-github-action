@@ -21,7 +21,7 @@ RUN pip3 install pinecone-client cohere
 
 # Copy your code file to the filesystem
 COPY entrypoint.sh /entrypoint.sh
-COPY pinecone_sync.py /github/workspace/pinecone_sync.py
+COPY pinecone_sync.py /pinecone_sync.py
 
 # Change permission to execute the script
 RUN chmod +x /entrypoint.sh

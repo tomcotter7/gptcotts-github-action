@@ -72,7 +72,7 @@ fi
 readarray -t changed_files < <(git show --name-only --oneline HEAD | tail -n +2)
 
 
-python3 ./pinecone_sync.py \
+python3 /pinecone_sync.py \
   --api_key $PINECONE_API_KEY \
   --cohere_api_key $COHERE_API_KEY \
   --index $PINECONE_INDEX \

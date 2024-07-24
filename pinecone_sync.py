@@ -82,13 +82,13 @@ def main(
     changed_files: str
 ):
 
-
+    
     pc = connect_to_pinecone(api_key)
     pc_index = pc.Index(index)
     if pc_index is None:
         raise ValueError(f"Index {index} not found")
 
-    files = [f.split(".")[0] for f in changed_files.split("\n")]
+    files = [f.split(".")[0] for f in changed_files.split("\n") if f.endswith(".md")]
 
     dim = 1024
     for file in files:

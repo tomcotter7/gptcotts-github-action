@@ -70,7 +70,7 @@ if [ -z "$COHERE_API_KEY" ]; then
 fi
 
 git config --global --add safe.directory /github/workspace
-files=$(git show --name-only --oneline HEAD | tail -n +2| paste -sd '\\n' -)
+files=$(git show --name-only --oneline HEAD | tail -n +2| paste -sd '|' -)
 echo $files
 
 

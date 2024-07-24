@@ -89,7 +89,7 @@ def main(
         raise ValueError(f"Index {index} not found")
 
     files = [f.split(".")[0] for f in changed_files.split("\n") if f.endswith(".md")]
-    print(f"Processing {files}"
+    print(f"Processing {files}")
 
     dim = 1024
     for file in files:

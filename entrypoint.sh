@@ -77,5 +77,5 @@ python3 /pinecone_sync.py \
   --cohere_api_key $COHERE_API_KEY \
   --index $PINECONE_INDEX \
   --namespace $PINECONE_NAMESPACE \
-  --changed_files $CHANGED_FILES
+  --changed_files "$CHANGED_FILES"
 

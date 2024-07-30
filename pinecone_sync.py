@@ -86,13 +86,12 @@ def main(
     changed_files: str
 ):
 
-    print(changed_files)
     pc = connect_to_pinecone(api_key)
     pc_index = pc.Index(index)
     if pc_index is None:
         raise ValueError(f"Index {index} not found")
 
-    files = [f.split(".")[0] for f in changed_files.split("|")]
+    files = [f.split(".")[0] for f in changed_files.split(" ")]
     files = [f for f in files if len(f) > 0]
 
     dim = 1024

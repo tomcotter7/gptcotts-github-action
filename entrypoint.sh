@@ -69,9 +69,7 @@ if [ -z "$COHERE_API_KEY" ]; then
   exit 1
 fi
 
-# git config --global --add safe.directory /github/workspace
-# files=$(git show --name-only --oneline HEAD | tail -n +2| paste -sd '|' -)
-# echo $files
+echo $CHANGED_FILES
 
 
 python3 /pinecone_sync.py \

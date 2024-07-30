@@ -9,27 +9,28 @@ python.md
 linear_algebra.md
 ...
 ```
-
-The script will only look for markdown files in the root directory of the repository.
+The script will only look for markdown files in the root directory of the repository. 
 
 ## Structure of Markdown files
 
 The markdown files should be of the form:
 
 ```
-# Title of the note
+# Neovim 
 
-## Subtitle
+## config
 
-any content
+The config file for neovim is located at `~/.config/nvim/init.vim`. This file contains all the settings for neovim.
 
-### Sub-subtitle
+### Useful configuration content 
 
-more content
+[This video]() is a great resource for learning how to configure neovim.
 ...
 ```
 
-It should be semi-structured with the title of the note at the top, followed by subtitles and sub-subtitles.
+It should be semi-structured with the title of the note at the top, followed by subtitles and sub-subtitles. If not in this structure, then the notes will not be properly indexed in pinecone.
+
+[ ] - TODO: Allow for more flexible structure of markdown files.
 
 ## Usage
 
@@ -53,7 +54,7 @@ jobs:
             files: |
               **.md
         - name: gptcotts action
-          uses: tomcotter7/gptcotts-github-action@main
+          uses: tomcotter7/gptcotts-github-action@latest
           env:
             AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -66,4 +67,4 @@ jobs:
             CHANGED_FILES: ${{ steps.changed-markdown-files.outputs.all_changed_files }}
 ```
 
-This will run the action whenever you push to the main branch. It will then update the s3 bucket and pinecone index with the latest notes.
+This will run the action whenever you push to the main branch. It will then update the s3 bucket and pinecone index with the latest notes. Ensure that all the secrets are set in the repository settings.

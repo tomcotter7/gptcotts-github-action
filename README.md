@@ -54,7 +54,7 @@ jobs:
             files: |
               **.md
         - name: gptcotts action
-          uses: tomcotter7/gptcotts-github-action@latest
+          uses: tomcotter7/gptcotts-github-action@main
           env:
             AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

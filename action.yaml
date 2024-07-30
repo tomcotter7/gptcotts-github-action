@@ -4,4 +4,6 @@ description: "sync your notes with s3 for use with gptcotts"
 runs:
   using: "docker"
   image: "Dockerfile"
-
+branding:
+  icon: book-open
+  color: green

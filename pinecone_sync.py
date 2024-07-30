@@ -112,11 +112,14 @@ def main(
         if ids:
             pc_index.delete(ids=ids, namespace=namespace)
         
-        with open(file + ".md", "r") as f:
-            text = f.read()
-        chunks = convert_to_chunks(text, file)
-        data = batch_embed(chunks, cohere_api_key)
-        upsert(pc, index, namespace, data)
+        try:
+            with open(file + ".md", "r") as f:
+                text = f.read()
+            chunks = convert_to_chunks(text, file)
+            data = batch_embed(chunks, cohere_api_key)
+            upsert(pc, index, namespace, data)
+        except FileNotFoundError:
+            print(f"File {file}.md not found. Not uploading to pinecone")
 
 
 if __name__ == "__main__":

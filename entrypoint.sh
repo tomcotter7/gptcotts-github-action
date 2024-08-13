@@ -44,11 +44,6 @@ echo "Sync to s3 complete"
 
 echo "Syncing to pinecone"
 
-PINECONE_API_KEY="6278a3cd-b5b9-4f7c-9aa9-018d9077f3f1"
-PINECONE_INDEX="notes"
-PINECONE_NAMESPACE="tcotts-notes"
-COHERE_API_KEY="E6Co5OUVwzw0l0UfHYZoZ2JBUvbPkc1qseEdN0Rr"
-
 if [ -z "$PINECONE_API_KEY" ]; then
   echo "PINECONE_API_KEY is not set. Quitting."
   exit 1

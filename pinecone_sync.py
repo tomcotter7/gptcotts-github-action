@@ -116,7 +116,7 @@ def main(
             with open(file + ".md", "r") as f:
                 text = f.read()
             chunks = convert_to_chunks(text, file)
-            valid_files.append(chunks)
+            valid_files.extend(chunks)
         except FileNotFoundError:
             print(f"File {file}.md not found. Not uploading to pinecone")
 

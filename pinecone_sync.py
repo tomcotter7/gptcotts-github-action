@@ -96,9 +96,7 @@ def main(
 
     dim = 1024
     for file in files:
-
         print(f"Processing file: {file}")
-
         old_data = pc_index.query(
                 namespace=namespace,
                 vector = [0.0 for _ in range(dim)],

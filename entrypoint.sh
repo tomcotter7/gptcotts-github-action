@@ -34,6 +34,7 @@ aws s3 sync . ${s3_url} \
     --profile s3-sync-action \
     --exclude ".git/*" \
     --exclude ".github/*" \
+    --exclude "Makefile" \
     --delete
 
 aws configure set aws_access_key_id null --profile s3-sync-action

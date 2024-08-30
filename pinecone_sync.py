@@ -94,9 +94,11 @@ def main(
     files = [f.split(".")[0] for f in changed_files.split(" ")]
     files = [f for f in files if len(f) > 0]
 
+    valid_files = []
     dim = 1024
+
     for file in files:
-        print(f"Processing file: {file}")
+        print(f"Deleting old data for {file}")
         old_data = pc_index.query(
                 namespace=namespace,
                 vector = [0.0 for _ in range(dim)],
@@ -114,10 +116,13 @@ def main(
             with open(file + ".md", "r") as f:
                 text = f.read()
             chunks = convert_to_chunks(text, file)
-            data = batch_embed(chunks, cohere_api_key)
-            upsert(pc, index, namespace, data)
+            valid_files.append(chunks)
         except FileNotFoundError:
             print(f"File {file}.md not found. Not uploading to pinecone")
+
+    if valid_files:
+        embeddings = batch_embed(valid_files, cohere_api_key)
+        upsert(pc, index, namespace, embeddings)
 
 
 if __name__ == "__main__":

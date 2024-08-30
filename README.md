@@ -47,6 +47,8 @@ jobs:
         steps:
         - name: checkout
           uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
         - name: get all changed markdown files
           id: changed-markdown-files
           uses: tj-actions/changed-files@v44

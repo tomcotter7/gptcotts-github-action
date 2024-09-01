@@ -30,24 +30,18 @@ s3_url="s3://${AWS_S3_BUCKET}/${AWS_DIR}"
 
 echo "Syncing to ${s3_url}"
 
-echo $CHANGED_FILES
 
-aws s3 sync . ${s3_url} \
-    --profile s3-sync-action \
-    --exclude "*" \
-    --include "$CHANGED_FILES" \
-    --delete
 
-# read -a ARRAY <<< "$CHANGED_FILES"
+read -a ARRAY <<< "$CHANGED_FILES"
 
-# for i in "${ARRAY[@]}"; do
-#     echo "Syncing $i"
-#     aws s3 sync . ${s3_url} \
-#         --profile s3-sync-action \
-#         --exclude "*" \
-#         --include "$i" \
-#         --delete
-# done
+for i in "${ARRAY[@]}"; do
+    echo "Syncing $i"
+    aws s3 sync . ${s3_url} \
+        --profile s3-sync-action \
+        --exclude "*" \
+        --include "$i" \
+        --delete
+done
 
 
 

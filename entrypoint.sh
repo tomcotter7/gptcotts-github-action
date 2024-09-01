@@ -35,9 +35,9 @@ read -a ARRAY <<< "$CHANGED_FILES"
 for i in "${ARRAY[@]}"; do
     echo "Syncing $i"
     aws s3 sync . ${s3_url} \
-        --include "$i" \
-        --exclude "*" \
         --profile s3-sync-action \
+        --exclude "*" \
+        --include "$i" \
         --delete
 done
 

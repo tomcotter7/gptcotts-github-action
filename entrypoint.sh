@@ -30,11 +30,22 @@ s3_url="s3://${AWS_S3_BUCKET}/${AWS_DIR}"
 
 echo "Syncing to ${s3_url}"
 
-aws s3 sync . ${s3_url} \
-    --profile s3-sync-action \
-    --include "$CHANGED_FILES" \
-    --exclude "*" \
-    --delete
+echo $CHANGED_FILES
+read -a ARRAY <<< "$CHANGED_FILES"
+for i in "${ARRAY[@]}"; do
+    echo "Syncing $i"
+    aws s3 sync . ${s3_url} \
+        --include "$i" \
+        --exclude "*" \
+        --profile s3-sync-action \
+        --delete
+done
+
+
+
+
+
+
 
 aws configure set aws_access_key_id null --profile s3-sync-action
 aws configure set aws_secret_access_key null --profile s3-sync-action

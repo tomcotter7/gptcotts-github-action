@@ -18,7 +18,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && ./aws/install \
     && rm -rf aws awscliv2.zip
 
-RUN pip3 install pinecone-client cohere
+RUN pip3 install pinecone==6.0.1 cohere==5.13.12
 
 # Copy your code file to the filesystem
 COPY entrypoint.sh /entrypoint.sh
